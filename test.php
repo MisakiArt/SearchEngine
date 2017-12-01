@@ -12,6 +12,7 @@
 	    $a=[];
 	foreach ($arr as $key => $v) {
 		$html=file_get_contents($v,false,stream_context_create($this->context));
+		set_time_limit(30);
 		if($html){
 			phpQuery::newDocumentHtml($html);
 		$items=pq('a');
@@ -23,13 +24,13 @@
 	      if(preg_match($match, $v))
 		$b[]=$v;
            }
-        if(count($this->res)>10000) break;
+        if(count($b)>10000) break;
 		}
 		else continue;
-		
 	  }
 	  $b=array_flip($b);
-	  $b=array_flip($b);
+	  $b=array_keys($b);
+	  print_r($b);
 	  $this->res=array_merge($this->res,$b);
 	  if(count($this->res)<10000){
 	  	$this->getUrl($b);
