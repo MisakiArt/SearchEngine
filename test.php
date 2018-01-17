@@ -45,7 +45,7 @@
 	  }
    	  }
 
-   	  public function getTitleByUrl($url,$str){
+   	  public function getTitleByUrl($url,$titleStr,$imgStr){
    	  	$html=file_get_contents($url,false,stream_context_create($this->context));
    	  	if($html){
    	  		phpQuery::newDocumentHtml($html);
