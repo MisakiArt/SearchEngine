@@ -44,6 +44,16 @@
 	  	$this->getUrl($b,$str);
 	  }
    	  }
+
+   	  public function getTitleByUrl($url,$str){
+   	  	$html=file_get_contents($url,false,stream_context_create($this->context));
+   	  	if($html){
+   	  		phpQuery::newDocumentHtml($html);
+   	  		$items=pq('#lg > img');
+   	  		print_r($items->attr('src'));
+   	  	}
+
+   	  }
    
    }
 
