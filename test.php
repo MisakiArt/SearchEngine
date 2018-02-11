@@ -22,7 +22,7 @@
      curl_setopt ( $curl_handle ,  CURLOPT_HEADER ,  false );
      curl_setopt($curl_handle, CURLOPT_CONNECTTIMEOUT, 1);
      curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, 1);
-     curl_setopt($curl_handle, CURLOPT_TIMEOUT, 10);
+     curl_setopt($curl_handle, CURLOPT_TIMEOUT, 20);
      curl_setopt($curl_handle, CURLOPT_SSL_VERIFYPEER, false);
      curl_setopt($curl_handle, CURLOPT_SSL_VERIFYHOST, false);
      if(($html = curl_exec($curl_handle)) ===  false )
@@ -50,7 +50,7 @@
 	  $this->res=array_merge($this->res,$b);
 	  if($end_flag<count($this->res)||count($this->res)<10000){
 	  	$this->flag++;
-	  	if($this->flag>3){
+	  	if($this->flag>10){
 	  		$this->res=array_flip($this->res);
 	        $this->res=array_keys($this->res);
 	  		print_r($this->res);
