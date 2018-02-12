@@ -1,10 +1,19 @@
 <?php
-$url=['www.baidu.com/dasd/qweq/sda','www.xinlang.com/asd/qwe/asd','www.ok.com/sad','www.baidu.com/asdqwe/xxxx/qweq'];
-$new_arr=[];
-foreach ($url as $v) {
-	if(!(strpos($v,'www.baidu.com')===false)){	
-		$new_arr[]=$v;
-	}
-}
-print_r($new_arr);
+require 'vendor/autoload.php';
+//$redis=new Redis();
+//$redis->connect('127.0.0.1',6379);
+$hosts = array('127.0.0.1:9200');
+$client = Elasticsearch\ClientBuilder::create()->setHosts($hosts)->build();
+$params = [
+    'index'=>'website',
+    'type'=>'blog',
+    'id'=>10,
+    'body'=>[
+        'title'=>'elasticsearch & php',
+        'content'=>'balabala...',
+        'created_at'=>'2017-08-01 12:02:20'
+    ]
+];
+$resp = $client->indices()->index($params);
+var_dump($resp);
 ?>
