@@ -6,8 +6,16 @@ set_time_limit(0);
 
 
 $spider=new spider();
-$spider->getUrl(['http://www.dilidili.wang/'],'http://www.dilidili.wang/anime');
-// $spider->getTitleByUrl('http://www.baidu.com');
+$referer='http://www.dilidili.wang';
+$spider->getUrl(['http://www.dilidili.wang/'],'/anime/',$referer);
+$url=$spider->res;
+$match='/http:\/\/www.dilidili.wang\//';
+foreach ($url as $u){
+    if(!preg_match($match,$u))
+        $u='http://www.dilidili.wang'.$u;
+    $message=spider::getTitleByUrl($url,'',$referer);
+
+}
 // 
 //Connection was reset 目标网站服务器不稳定。
 //网页为空，ajax方式请求网站，去network做同样的请求
