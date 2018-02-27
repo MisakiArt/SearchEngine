@@ -17,24 +17,7 @@
    	  	$b=[];
 	    $a=[];
 	foreach ($arr as $key => $v) {
-	$curl_handle=curl_init();
-     curl_setopt($curl_handle, CURLOPT_URL,$v);
-     curl_setopt ( $curl_handle ,  CURLOPT_HEADER ,  false );
-     curl_setopt($curl_handle, CURLOPT_CONNECTTIMEOUT, 1);
-     curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, 1);
-     curl_setopt($curl_handle, CURLOPT_TIMEOUT, 20);
-     curl_setopt($curl_handle, CURLOPT_SSL_VERIFYPEER, false);
-     curl_setopt($curl_handle, CURLOPT_SSL_VERIFYHOST, false);
-     if(!empty($referer)){
-         curl_setopt($curl_handle,CURLOPT_REFERER,$referer);
-     }
-
-     if(($html = curl_exec($curl_handle)) ===  false )
-      {
-    echo  'Curl error: '  .  curl_error ( $curl_handle );
-    // print_r(curl_getinfo($curl_handle));
-       }
-     curl_close($curl_handle);
+	$html=self::getHtmlByUrl($v,$referer);
 		if($html){
 			phpQuery::newDocumentHtml($html);
 		$items=pq('a');
@@ -68,7 +51,26 @@
    	  }
 
    	  public static function getTitleByUrl($url,$titleStr,$referer){
-          $curl_handle=curl_init();
+          $html=self::getHtmlByUrl($url,$referer);
+   	  	if($html){
+   	  		phpQuery::newDocumentHtml($html);
+   	  		$item1=pq('dd > h1');
+   	  		$title=$item1->html();
+   	  		$item2=pq('.play_cs');
+   	  		$match="/<script.*<\/script>/U";
+   	  		$a=preg_match($match,$item2->html(),$array);
+   	  		print_r($array);
+   	  		// $match='/\d+/';
+   	  		// $script=file_get_contents('http://www.dilidili.wang/plus/countlist.php?view=yes&aid=3103&mid=');
+        //     $hot=preg_match($match,htmlentities($script),$matchArray);
+        //     print_r($matchArray);
+   	  	}
+
+   	  }
+
+
+      public static function getHtmlByUrl($url,$referer=''){
+        $curl_handle=curl_init();
           curl_setopt($curl_handle, CURLOPT_URL,$url);
           curl_setopt ( $curl_handle ,  CURLOPT_HEADER ,  false );
           curl_setopt($curl_handle, CURLOPT_CONNECTTIMEOUT, 1);
@@ -83,25 +85,11 @@
           if(($html = curl_exec($curl_handle)) ===  false )
           {
               echo  'Curl error: '  .  curl_error ( $curl_handle );
-              // print_r(curl_getinfo($curl_handle));
+              $html='';
           }
           curl_close($curl_handle);
-   	  	if($html){
-   	  		phpQuery::newDocumentHtml($html);
-   	  		$item1=pq('dd > h1');
-   	  		$title=$item1->html();
-   	  		$item2=pq('.play_cs');
-   	  		$match="/<script(?:[^<]++|<(?!/script>))*+<\/script>/";
-   	  		echo htmlentities($match);
-   	  		$a=preg_match($match,htmlentities($item2->html()),$array);
-   	  		print_r($array);
-   	  		$match='/\d+/';
-   	  		$script=file_get_contents('http://www.dilidili.wang/plus/countlist.php?view=yes&aid=3103&mid=');
-            $hot=preg_match($match,htmlentities($script),$matchArray);
-            print_r($matchArray);
-   	  	}
-
-   	  }
+          return $html;
+      }
    
    }
 
