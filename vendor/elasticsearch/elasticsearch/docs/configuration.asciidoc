@@ -53,12 +53,12 @@ $client = $clientBuilder->build();          // Build the client object
 
 The client also supports an _extended_ host configuration syntax.  The inline configuration method relies on PHP's
 `filter_var()` and `parse_url()` methods to validate and extract the components of a URL.  Unfortunately, these built-in
-methods run into problems with certain edge-cases.  For example, `filter_var()` will not accept URLs that have underscores
+methods run into problems with certain edge-cases.  For example, `filter_var()` will not accept URL's that have underscores
 (which are questionably legal, depending on how you interpret the RFCs).  Similarly, `parse_url()` will choke if a
 Basic Auth's password contains special characters such as a pound sign (`#`) or question-marks (`?`).
 
 For this reason, the client supports an extended host syntax which provides greater control over host initialization.
-None of the components are validated, so edge-cases like underscores domain names will not cause problems.
+None of the components are validated, so edge-cases like underscores in domain names will not cause problems.
 
 The extended syntax is an array of parameters for each host:
 
@@ -71,7 +71,7 @@ $hosts = [
         'port' => '9200',
         'scheme' => 'https',
         'user' => 'username',
-        'password' => 'password!#$?*abc'
+        'pass' => 'password!#$?*abc'
     ],
 
     // This is equal to "http://localhost:9200/"
@@ -134,7 +134,7 @@ try {
 
 Alternatively, all "hard" curl exceptions (`CouldNotConnectToHost`, `CouldNotResolveHostException`, `OperationTimeoutException`)
 extend the more general `TransportException`.  So you could instead catch the general `TransportException` and then
-check its previous value:
+check it's previous value:
 
 [source,php]
 ----
@@ -167,7 +167,7 @@ You might have noticed that Monolog was suggested during installation.  To begin
 {
     "require": {
         ...
-        "elasticsearch/elasticsearch" : "~2.0",
+        "elasticsearch/elasticsearch" : "~5.0",
         "monolog/monolog": "~1.0"
     }
 }
@@ -227,7 +227,7 @@ $client = ClientBuilder::create()       // Instantiate a new ClientBuilder
 
 Elasticsearch-PHP uses an interchangeable HTTP transport layer called https://github.com/guzzle/RingPHP/[RingPHP].  This
 allows the client to construct a generic HTTP request, then pass it to the transport layer to execute.  The actual execution
-details are hidden from the client and modular, so that you can choose from several HTTP handlers depending on your needs.
+details are hidden from the client and it is modular, so that you can choose from several HTTP handlers depending on your needs.
 
 The default handler that the client uses is a combination handler.  When executing in synchronous mode, the handler
 uses `CurlHandler`, which executes single curl calls.  These are very fast for single requests.  When asynchronous (future)
@@ -366,7 +366,7 @@ The ConnectionFactory requires a working HTTP handler, serializer, logger and tr
 
 The client uses an Endpoint closure to dispatch API requests to the correct Endpoint object.  A namespace object will
 construct a new Endpoint via this closure, which means this is a handy location if you wish to extend the available set
-of API endpoints available.
+of API endpoints available
 
 For example, we could add a new endpoint like so:
 

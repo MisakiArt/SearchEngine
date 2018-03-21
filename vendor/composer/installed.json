@@ -1,54 +1,5 @@
 [
     {
-        "name": "psr/log",
-        "version": "1.0.2",
-        "version_normalized": "1.0.2.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/php-fig/log.git",
-            "reference": "4ebe3a8bf773a19edfe0a84b6585ba3d401b724d"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/php-fig/log/zipball/4ebe3a8bf773a19edfe0a84b6585ba3d401b724d",
-            "reference": "4ebe3a8bf773a19edfe0a84b6585ba3d401b724d",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.3.0"
-        },
-        "time": "2016-10-10T12:19:37+00:00",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "1.0.x-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "Psr\\Log\\": "Psr/Log/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "PHP-FIG",
-                "homepage": "http://www.php-fig.org/"
-            }
-        ],
-        "description": "Common interface for logging libraries",
-        "homepage": "https://github.com/php-fig/log",
-        "keywords": [
-            "log",
-            "psr",
-            "psr-3"
-        ]
-    },
-    {
         "name": "react/promise",
         "version": "v2.5.1",
         "version_normalized": "2.5.1.0",
@@ -59,7 +10,7 @@
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/reactphp/promise/zipball/62785ae604c8d69725d693eb370e1d67e94c4053",
+            "url": "https://files.phpcomposer.com/files/reactphp/promise/62785ae604c8d69725d693eb370e1d67e94c4053.zip",
             "reference": "62785ae604c8d69725d693eb370e1d67e94c4053",
             "shasum": ""
         },
@@ -107,7 +58,7 @@
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/guzzle/streams/zipball/47aaa48e27dae43d39fc1cea0ccf0d84ac1a2ba5",
+            "url": "https://files.phpcomposer.com/files/guzzle/streams/47aaa48e27dae43d39fc1cea0ccf0d84ac1a2ba5.zip",
             "reference": "47aaa48e27dae43d39fc1cea0ccf0d84ac1a2ba5",
             "shasum": ""
         },
@@ -159,7 +110,7 @@
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/guzzle/RingPHP/zipball/dbbb91d7f6c191e5e405e900e3102ac7f261bc0b",
+            "url": "https://files.phpcomposer.com/files/guzzle/RingPHP/dbbb91d7f6c191e5e405e900e3102ac7f261bc0b.zip",
             "reference": "dbbb91d7f6c191e5e405e900e3102ac7f261bc0b",
             "shasum": ""
         },
@@ -202,38 +153,88 @@
         "description": "Provides a simple API and specification that abstracts away the details of HTTP into a single PHP function."
     },
     {
-        "name": "elasticsearch/elasticsearch",
-        "version": "v2.3.2",
-        "version_normalized": "2.3.2.0",
+        "name": "psr/log",
+        "version": "1.0.2",
+        "version_normalized": "1.0.2.0",
         "source": {
             "type": "git",
-            "url": "https://github.com/elastic/elasticsearch-php.git",
-            "reference": "c57db9da04f4c54c2ca69a52bc618d9120b96d4d"
+            "url": "https://github.com/php-fig/log.git",
+            "reference": "4ebe3a8bf773a19edfe0a84b6585ba3d401b724d"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/elastic/elasticsearch-php/zipball/c57db9da04f4c54c2ca69a52bc618d9120b96d4d",
-            "reference": "c57db9da04f4c54c2ca69a52bc618d9120b96d4d",
+            "url": "https://files.phpcomposer.com/files/php-fig/log/4ebe3a8bf773a19edfe0a84b6585ba3d401b724d.zip",
+            "reference": "4ebe3a8bf773a19edfe0a84b6585ba3d401b724d",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.0"
+        },
+        "time": "2016-10-10T12:19:37+00:00",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "1.0.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Psr\\Log\\": "Psr/Log/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "PHP-FIG",
+                "homepage": "http://www.php-fig.org/"
+            }
+        ],
+        "description": "Common interface for logging libraries",
+        "homepage": "https://github.com/php-fig/log",
+        "keywords": [
+            "log",
+            "psr",
+            "psr-3"
+        ]
+    },
+    {
+        "name": "elasticsearch/elasticsearch",
+        "version": "v5.3.2",
+        "version_normalized": "5.3.2.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/elastic/elasticsearch-php.git",
+            "reference": "4b29a4121e790bbfe690d5ee77da348b62d48eb8"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://files.phpcomposer.com/files/elastic/elasticsearch-php/4b29a4121e790bbfe690d5ee77da348b62d48eb8.zip",
+            "reference": "4b29a4121e790bbfe690d5ee77da348b62d48eb8",
             "shasum": ""
         },
         "require": {
             "guzzlehttp/ringphp": "~1.0",
-            "php": ">=5.4",
+            "php": "^5.6|^7.0",
             "psr/log": "~1.0"
         },
         "require-dev": {
             "cpliakas/git-wrapper": "~1.0",
+            "doctrine/inflector": "^1.1",
             "mockery/mockery": "0.9.4",
-            "phpunit/phpunit": "~4.7",
+            "phpunit/phpunit": "^4.7|^5.4",
             "sami/sami": "~3.2",
-            "symfony/yaml": "2.4.3 as 2.4.2",
-            "twig/twig": "1.*"
+            "symfony/finder": "^2.8",
+            "symfony/yaml": "^2.8"
         },
         "suggest": {
             "ext-curl": "*",
             "monolog/monolog": "Allows for client-level logging and tracing"
         },
-        "time": "2017-12-05T14:05:24+00:00",
+        "time": "2017-11-08T17:04:47+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {

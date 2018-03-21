@@ -3,7 +3,7 @@
 
 When you add documents to Elasticsearch, you index JSON documents.  This maps naturally to PHP associative arrays, since
 they can easily be encoded in JSON.  Therefore, in Elasticsearch-PHP you create and pass associative arrays to the client
-for indexing.  There are several methods of ingesting data into Elasticsearch, which we will cover here
+for indexing.  There are several methods of ingesting data into Elasticsearch, which we will cover here.
 
 === Single document indexing
 
@@ -156,7 +156,7 @@ update to just some fields (either changing an existing field, or adding new fie
 === Partial document update
 
 If you want to partially update a document (e.g. change an existing field, or add a new one) you can do so by specifying
-the `doc` in the `body` parameter.  This will merge the fields in `doc` with the existing document.
+the `doc` in the `body` parameter.  This will merge the fields in `doc` with the existing document:
 
 
 [source,php]
