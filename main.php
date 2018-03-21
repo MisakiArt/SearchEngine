@@ -1,6 +1,6 @@
 <?php
 require_once "model/phpQuery.php";
-require_once "model/test.php";
+require_once "model/spider.php";
 require 'vendor/autoload.php';
 ignore_user_abort();
 set_time_limit(0);
