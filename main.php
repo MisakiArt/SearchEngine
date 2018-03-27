@@ -5,12 +5,14 @@ require 'vendor/autoload.php';
 ignore_user_abort();
 set_time_limit(0);
 
-
+$redis = new redis();
+$redis ->connect('127.0.0.1','6379');
+$redis -> flushAll();
 $spider=new spider();
 $referer='http://www.dilidili.wang';
 $spider->getUrl(['http://www.dilidili.wang/'],'/anime/',$referer);
-$url=$spider->res;
-$match='/http:\/\/www.dilidili.wang\//';
+$url=$redis -> hVals('MiProjectUrlList');
+$match='/http:\/\/www.dilidili.wang\/anime/';
 foreach ($url as $u){
     if(!preg_match($match,$u))
         $u='http://www.dilidili.wang'.$u;
