@@ -13,14 +13,15 @@
    	  public function getUrl($arr,$str,$referer=''){
           $redis = new redis();
           $redis ->connect('127.0.0.1','6379');
-	    $end_flag=$redis -> hLen('MiProjectUrlList');
+	    $end_flag=$redis -> hLen('MiProjectUrlHash');
    	  	 $b=[];
 	     $a=[];
 	     foreach ($arr as $key => $v) {
-           if (!$redis->hExists('MiProjectUrlList', json_encode($v))) {
+           if (!$redis->hExists('MiProjectUrlHash', json_encode($v))) {
             $html = self::getHtmlByUrl($v, $referer);
             if ($html) {
-                $redis->hSetNx('MiProjectUrlList', json_encode($v), $v);
+                $redis->hSetNx('MiProjectUrlHash', json_encode($v), $v);
+                $redis->Lpush('MiProjectUrlList',$v);
                 echo $v . PHP_EOL;
                 phpQuery::newDocumentHtml($html);
                 $items = pq('a');
@@ -36,9 +37,9 @@
             if($b) {
                 $b = array_flip($b);
                 $b = array_keys($b);
-                if ($end_flag < $redis->hLen('MiProjectUrlList') || $redis->hLen('MiProjectUrlList') < 10000) {
+                if ($end_flag < $redis->hLen('MiProjectUrlHash') || $redis->hLen('MiProjectUrlHash') < 10000) {
                     $this->flag++;
-                    echo $redis->hLen('MiProjectUrlList') . PHP_EOL;
+                    echo $redis->hLen('MiProjectUrlHash') . PHP_EOL;
 //	  	if($this->flag>5){
 //	  		$this->res=array_flip($this->res);
 //	        $this->res=array_keys($this->res);
@@ -60,12 +61,10 @@
    	  		$item2=pq('.play_cs');
    	  		$match="/<script.*<\/script>/U";
    	  		$a=preg_match($match,$item2->html(),$array);
-   	  		print_r($array);
-   	  		// $match='/\d+/';
-   	  		// $script=file_get_contents('http://www.dilidili.wang/plus/countlist.php?view=yes&aid=3103&mid=');
-        //     $hot=preg_match($match,htmlentities($script),$matchArray);
-        //     print_r($matchArray);
+   	  		$params=['title'=>$title,'hot'=>$array[0],'url'=>$url];
+   	  		return $params;
    	  	}
+   	  	return [];
 
    	  }
 

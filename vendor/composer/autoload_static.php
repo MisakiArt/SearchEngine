@@ -19,6 +19,10 @@ class ComposerStaticInitb148a31c14eb240767db89e9a3dc5a68
         array (
             'Psr\\Log\\' => 8,
         ),
+        'M' => 
+        array (
+            'Monolog\\' => 8,
+        ),
         'G' => 
         array (
             'GuzzleHttp\\Stream\\' => 18,
@@ -38,6 +42,10 @@ class ComposerStaticInitb148a31c14eb240767db89e9a3dc5a68
         'Psr\\Log\\' => 
         array (
             0 => __DIR__ . '/..' . '/psr/log/Psr/Log',
+        ),
+        'Monolog\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/monolog/monolog/src/Monolog',
         ),
         'GuzzleHttp\\Stream\\' => 
         array (
