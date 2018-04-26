@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>朝见台</title>
+	<script type="text/javascript" src="js/jquery.js"></script>
+	<script type="text/javascript" src="js/vue.min.js"></script>
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="css/css.css">
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+</head>
+<body style="height: 800px">
+<div id="header"></div>
+<div id="content">
+  <div id="search_box">
+  <h1 class="title">Yomiyama Misaki</h1>
+  <input type="" name="" class="int">
+  <button class="btn">Search</button>
+  </div>
+  <div class="result_list">
+  <table class="list_table">
+  <tr><th>title</th><th>source</th><th>hot</th></tr>
+  <tr><td><a href="sxxa">Fate/EXTRA Last Encore</a></td><td>http://www.dilidili.wang/</td><td>1344102</td></tr>
+  <tr><td><a href="sxxa">Fate/Stay night</a></td><td>http://www.dilidili.wang/</td><td>411866</td></tr>
+  <tr><td><a href="sxxa">Fate/Apocrypha收藏</a></td><td>http://www.dilidili.wang/</td><td>1067479</td></tr>
+  <tr><td><a href="sxxa">Fate/Zero</a></td><td>http://www.dilidili.wang/</td><td>388537</td></tr>
+  <tr><td><a href="sxxa">fate kaleid liner</a></td><td>http://www.dilidili.wang/</td><td>241343</td></tr>
+  </table>
+  </div>
+</div>
+<div id="footer">
+</div>
+	
+</body>
+<script>
+$('.btn').click(function(){
+	$('.list_table').children().remove();
+	var search = $('.int').val();
+	 $.ajax({
+	 	type:'POST',
+	 	url:'http://127.0.0.1/SearchEngine/MisakiProjectApi.php',
+	 	data:{'search':search},
+	 	success:function(respon){
+	 	    var re=jQuery.parseJSON(respon);
+	 	    if(re.status=='success'){
+                var data = re.data;
+                data.forEach(function(da){
+                    var title = da.title;
+                    var url = da.url;
+                    var source = da.source;
+                    var hot = da.hot;
+                    var list='<tr><td><a href="'+url+'">'+title+'</a></td><td>'+source+'</td><td>'+hot+'</td></tr>';
+                    $('.list_table').append(list);
+                });
+            }else {
+	 	        switch (re.errorType){
+                    case 0:alert('无搜索结果');break;
+                    case 1:alert('检测到非法字符');break;
+                }
+            }
+
+
+	 	}
+	 });
+});
+</script>
+</html>
