@@ -62,6 +62,7 @@
         //     $hot=preg_match($match,htmlentities($script),$matchArray);
         //     print_r($matchArray);
    	  	}
+   	  	return [];
 
    	  }
 
