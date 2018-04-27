@@ -1,0 +1,31 @@
+#header{
+	width: 100%;
+	height: 20%;
+}
+#content{
+	width: 100%;
+	text-align: center;
+}
+#search_box{
+	text-align: center;
+}
+.result_list{
+	width: 80%;
+	margin: 0 auto;
+	text-align: center;
+}
+
+.int{
+	width: 300px;
+	margin-right: 50px;
+	margin-top:50px;
+}
+.list_table{
+	width: 80%;
+	margin: 0 auto;
+}
+.list_table th{
+	line-height: 30px;
+}
+.list_table tr{
+}
