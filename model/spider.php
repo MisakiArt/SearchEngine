@@ -1,45 +1,55 @@
 <?php
-   /**
-   * 
-   */
+require_once dirname(__FILE__)."/../config.php";
+
    class spider 
    {
+      public $modify_date;
    	  public $res=[];
    	  public $url=[];
-   	  public $flag=0;
-   	  public $context= ['http'=>['timeout'=>60]];
+   	  public $urlCount = 0;
+   	  public $hashCount = 0;
 
 
    	  public function getUrl($arr,$str,$referer=''){
+   	      $this->setModifyDate();
+   	      $redis_config = new config();
+   	      $redis_config = $redis_config->getRedisConfig(md5($redis_config::CODERNAME.$this->modify_date));
+
           $redis = new redis();
-          $redis ->connect('127.0.0.1','6379');
-	    $end_flag=$redis -> hLen('MiProjectUrlHash');
-   	  	 $b=[];
-	     $a=[];
+          $redis ->connect($redis_config['ip'],$redis_config['port']);
+	      $end_flag=$this->urlCount;
+	      unset($temp_array);
+          $temp_array=[];
+	      $url=[];
 	     foreach ($arr as $key => $v) {
            if (!$redis->hExists('MiProjectUrlHash', json_encode($v))) {
                $redis->hSetNx('MiProjectUrlHash', json_encode($v), $v);
+               $this->hashCount++;
             $html = self::getHtmlByUrl($v, $referer);
             if ($html) {
+                $this->urlCount++;
                 $redis->Lpush('MiProjectUrlList',$v);
                 phpQuery::newDocumentHtml($html);
+                unset($html);
                 $items = pq('a');
                 foreach ($items as $item) {
-                    $a[] = pq($item)->attr('href');
+                    $url[] = pq($item)->attr('href');
                 }
-                foreach ($a as $k => $v) {
+                unset($item);
+                foreach ($url as $k => $v) {
                     if (!(strpos($v, $str) === false))
-                        $b[] = $v;
+                        $temp_array[] = $v;
                 }
-                if (count($b) > 10000) break;//单个网页上限
+                unset($url);
+                $temp_array = array_flip($temp_array);
+                $temp_array = array_keys($temp_array);
+                if (count($temp_array) > 1000)
+                    $temp_array = array_slice($temp_array,0,1000);//单个网页上限
             }
-            if($b) {
-                $b = array_flip($b);
-                $b = array_keys($b);
-                if ($end_flag < $redis->hLen('MiProjectUrlHash') || $redis->hLen('MiProjectUrlHash') < 10000) {
-                    $this->flag++;
-                    echo 'url number:'.$redis->hLen('MiProjectUrlHash') . PHP_EOL;
-                    $this->getUrl($b, $str, $referer);
+            if($temp_array) {
+                if ($end_flag < $this->urlCount && $this->urlCount < 10000) {
+                    echo 'url number:'.$this->urlCount . PHP_EOL;
+                    $this->getUrl($temp_array, $str, $referer);
                 }
             }
           }
@@ -49,6 +59,7 @@
    	  public static function getInformationByUrl($url,$referer,&$body){
           $html=self::getHtmlByUrl($url,$referer);
    	  	if($html){
+   	  	    $date = date('Y-m-d');
    	  		phpQuery::newDocumentHtml($html);
    	  		$item1=pq('dd > h1');
    	  		$title=$item1->html();
@@ -56,11 +67,7 @@
    	  		$match="/<script.*<\/script>/U";
    	  		$a=preg_match($match,$item2->html(),$array,0);
             $body[]=['index'=>['_id'=>$url,'routing'=>'Dilidili']];
-            $body[]=['title'=>$title,'script'=>$array[0],'url'=>$url];
-   	  		// $match='/\d+/';
-   	  		// $script=file_get_contents('http://www.dilidili.wang/plus/countlist.php?view=yes&aid=3103&mid=');
-        //     $hot=preg_match($match,htmlentities($script),$matchArray);
-        //     print_r($matchArray);
+            $body[]=['title'=>$title,'script'=>isset($array[0])?$array[0]:'','url'=>$url,'create_time'=>strtotime($date),'update_time'=>strtotime($date),'has_special_param'=>true];
    	  	}
    	  	return [];
 
@@ -111,6 +118,10 @@
            }
            curl_close($curl_handle);
            return $html;
+       }
+
+       public function setModifyDate(){
+           $this->modify_date = date('Y-m-d');
        }
 
    

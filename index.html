@@ -2,10 +2,8 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>朝见台</title>
+	<title>Yomiyama</title>
 	<script type="text/javascript" src="js/jquery.js"></script>
-	<script type="text/javascript" src="js/vue.min.js"></script>
-	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="css/css.css">
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 </head>
@@ -33,35 +31,64 @@
 	
 </body>
 <script>
-$('.btn').click(function(){
-	$('.list_table').children().remove();
-	var search = $('.int').val();
-	 $.ajax({
-	 	type:'POST',
-	 	url:'http://127.0.0.1/SearchEngine/MisakiProjectApi.php',
-	 	data:{'search':search},
-	 	success:function(respon){
-	 	    var re=jQuery.parseJSON(respon);
-	 	    if(re.status=='success'){
-                var data = re.data;
-                data.forEach(function(da){
-                    var title = da.title;
-                    var url = da.url;
-                    var source = da.source;
-                    var hot = da.hot;
-                    var list='<tr><td><a href="'+url+'">'+title+'</a></td><td>'+source+'</td><td>'+hot+'</td></tr>';
-                    $('.list_table').append(list);
-                });
-            }else {
-	 	        switch (re.errorType){
-                    case 0:alert('无搜索结果');break;
-                    case 1:alert('检测到非法字符');break;
+    $(function () {
+
+        $.ajax({
+            type:'POST',
+            url:'http://127.0.0.1/SearchEngine/MisakiProjectApi.php',
+            data:{'search':search,'type':1},
+            success:function(respon){
+                var re=jQuery.parseJSON(respon);
+                if(re.status=='success'){
+                    var data = re.data;
+                    data.forEach(function(da){
+                        var title = da.title;
+                        var url = da.url;
+                        var source = da.source;
+                        var hot = da.hot;
+                        var list='<tr><td><a href="'+url+'">'+title+'</a></td><td>'+source+'</td><td>'+hot+'</td></tr>';
+                        $('.list_table').append(list);
+                    });
+                }else {
+                    alert('数据库异常');
                 }
+
+
             }
+        });
 
 
-	 	}
-	 });
-});
+        $('.btn').click(function(){
+            $('.list_table').children().remove();
+            var search = $('.int').val();
+            $.ajax({
+                type:'POST',
+                url:'http://127.0.0.1/SearchEngine/MisakiProjectApi.php',
+                data:{'search':search,'type':2},
+                success:function(respon){
+                    var re=jQuery.parseJSON(respon);
+                    if(re.status=='success'){
+                        var data = re.data;
+                        data.forEach(function(da){
+                            var title = da.title;
+                            var url = da.url;
+                            var source = da.source;
+                            var hot = da.hot;
+                            var list='<tr><td><a href="'+url+'">'+title+'</a></td><td>'+source+'</td><td>'+hot+'</td></tr>';
+                            $('.list_table').append(list);
+                        });
+                    }else {
+                        switch (re.errorType){
+                            case 0:alert('无搜索结果');break;
+                            case 1:alert('检测到非法字符');break;
+                        }
+                    }
+
+
+                }
+            });
+        });
+    });
+
 </script>
 </html>

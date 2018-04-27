@@ -1,16 +1,28 @@
 <?php
-require_once "model/phpQuery.php";
-require_once "model/spider.php";
-require 'vendor/autoload.php';
+require_once dirname(__FILE__)."/model/phpQuery.php";
+require_once dirname(__FILE__)."/model/spider.php";
+require_once dirname(__FILE__).'/vendor/autoload.php';
+require_once dirname(__FILE__)."/config.php";
 ignore_user_abort();
+ini_set('memory_limit','500M');
 set_time_limit(0);
+
+
 
 $redis = new redis();
 $redis ->connect('127.0.0.1','6379');
 $redis -> flushAll();
+$config = new config();
+$siteConfig = $config->getTargetSiteConfig();
 $spider=new spider();
-$referer='http://www.dilidili.wang';
-$spider->getUrl(['http://www.dilidili.wang/'],'/anime/',$referer);
+$referer=$siteConfig['target_site_referer'];
+$spider->getUrl([$siteConfig['target_site_port']],$siteConfig['target_site_web_rule'],$referer);
+$HashList = $redis->hGetAll('MiProjectUrlHash');
+$date = date('Ymd');
+$myfile = fopen(dirname(__FILE__)."/historyHashList/hashListLog".$date.".txt", "w") or die("Unable to open file!");
+$txt = serialize($HashList);
+fwrite($myfile, $txt);
+fclose($myfile);
 //$url=$redis -> hVals('MiProjectUrlHash');
 //print_r($url);
 //if(!$redis->hExists('MiProjectUrlHash', json_encode('http://www.dilidili.wang/anime/2018/'))){
